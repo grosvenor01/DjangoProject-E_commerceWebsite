@@ -1,0 +1,528 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!-- Begin Header Area -->
+<header>
+    <!-- Begin Header Middle Area -->
+    <div class="header-middle pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0">
+        <div class="container">
+            <div class="row">
+                <!-- Begin Header Logo Area -->
+                <div class="col-lg-3">
+                    <div class="logo pb-sm-30 pb-xs-30">
+                        <a href="{{'/home/'}}">
+                        </a>
+                    </div>
+                </div>
+                <!-- Header Logo Area End Here -->
+                <!-- Begin Header Middle Right Area -->
+                <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
+                    <!-- Begin Header Middle Searchbox Area -->
+                    <form action="{{'/search_product/'}}" method='POST' class="hm-searchbox">
+                        {% csrf_token %}
+                        <select class="nice-select select-search-category" name="selected">
+                            <option value="0">All</option>   
+                            {%for cat in categories %}                      
+                            <option value="{{cat.category_name}}">{{cat.category_name}}</option>                     
+                            {%endfor%}
+                        </select>
+                        <input type="text" name="searching" placeholder="Enter your search key ...">
+                        <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                    <!-- Header Middle Searchbox Area End Here -->
+                    <!-- Begin Header Middle Right Area -->
+                    <div class="header-middle-right">
+                        <ul class="hm-menu">
+                            <!-- Begin Header Middle Wishlist Area -->
+                            <li class="hm-wishlist">
+                                <a href="{{'/wishliste/'}}">
+                                    
+                                    <i class="fa fa-heart-o"></i>
+                                </a>
+                            </li>
+                            <!-- Header Middle Wishlist Area End Here -->
+                            <!-- Begin Header Mini Cart Area -->
+                            <li class="hm-minicart">
+                                <div class="hm-minicart-trigger">
+                                    <span class="item-icon"></span>
+                                    <span class="item-text">{{minicart}}da
+                                        <span class="cart-item-count">{{number_shopping}}</span>
+                                    </span>
+                                </div>
+                                <span></span>
+                                <div class="minicart">
+                                    <ul class="minicart-product-list">
+                                        {% for car in cart %}
+                                        <li>
+                                            <a href="{%url 'product' car.id %}" class="minicart-product-image">
+                                                <img src=" {{ car.produit.photo_produit.url }}" alt="cart products">
+                                            </a>
+                                            <div class="minicart-product-details">
+                                                <h6><a href="{% url 'product' car.id %}">{{car.produit.nom_produit}}</a></h6>
+                                                <span>{{car.produit.prix}}da x {{car.quantity}}</span>
+                                            </div>
+                                            <button class="close">
+                                                <a href="{%url 'remove_shoppingcart_item' car.id %}">
+                                                <i class="fa fa-close"></i>
+                                                </a>
+                                            </button>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p class="minicart-total">SUBTOTAL: <span>{{minicart}}da</span></p>
+                                    <div class="minicart-button">
+                                        <a href="{{'/shopping-cart/'}}" class="li-button li-button-dark li-button-fullwidth li-button-sm">
+                                            <span>View Full Cart</span>
+                                        </a>
+                         
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Header Mini Cart Area End Here -->
+                        </ul>
+                    </div>
+                    <!-- Header Middle Right Area End Here -->
+                </div>
+                <!-- Header Middle Right Area End Here -->
+            </div>
+        </div>
+    </div>
+    <!-- Header Middle Area End Here -->
+    <!-- Begin Header Bottom Area -->
+    <div class="header-bottom header-sticky d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Begin Header Bottom Menu Area -->
+                    <div class="hb-menu hb-menu-2 d-xl-block">
+                        <nav>
+                            <ul>
+                
+                                <li class="dropdown-holder"><a href="{{'/home/'}}">Home</a></li>
+                                <li class="megamenu-static-holder"><a href="{{'/home/'}}">Pages</a>
+                                <li class="dropdown-holder"><a href="{{'/formations/'}}">Formation</a></li>
+                                <li class="dropdown-holder"><a href="{{'/services/'}}">Services</a></li>
+                                    <ul class="megamenu hb-megamenu">
+                                        <li><a href="index.html">Principal pages</a>
+                                            <ul>
+                                                <li><a href="{{'/signin/'}}">My Account</a></li>
+                                                <li><a href="{{'/wishliste/'}}">Wishlist</a></li>
+                                                <li><a href="{{'/shopping-cart/'}}">Shopping Cart</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- Begin Header Bottom Menu Information Area -->
+                                <li class="hb-info f-right p-0 d-sm-none d-lg-block">
+                                    <div class="ht-setting-trigger"><span>Setting</span></div>
+                                   <div class="setting ht-setting">
+                                    <ul class="ht-setting-list">
+                                        <li><a href="">My Account</a></li>
+                                        <li><a href="{{'/shopping-cart/'}}">Checkout</a></li>
+                                        <li><a href="{{'/logout/'}}">Logout</a></li>
+                                    </ul>
+                                   </div>
+                                </li>
+                                <!-- Header Bottom Menu Information Area End Here -->
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- Header Bottom Menu Area End Here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header Bottom Area End Here -->
+    <!-- Begin Mobile Menu Area -->
+    <div class="mobile-menu-area d-lg-none d-xl-none col-12">
+        <div class="container"> 
+            <div class="row">
+                <div class="mobile-menu">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Mobile Menu Area End Here -->
+</header>
+<!-- Header Area End Here -->
+            <!-- Begin Li's Breadcrumb Area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="breadcrumb-content">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active">Single Product Tab Left</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Breadcrumb Area End Here -->
+            <!-- content-wraper start -->
+              <!-- content-wraper start -->
+              <div class="content-wraper">
+                <div class="container">
+                    <div class="row single-product-area">
+                        <div class="col-lg-5 col-md-6">
+                           <!-- Product Details Left -->
+                            <div class="product-details-left">
+                                <div class="product-details-images slider-navigation-1">
+                                    <div class="lg-image">
+                                        <img src="{{product.photo_produit.url}}" alt="product image">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!--// Product Details Left -->
+                        </div>
+
+                        <div class="col-lg-7 col-md-6">
+                            <div class="product-details-view-content sp-sale-content pt-60">
+                                <div class="product-info">
+                                    <h2>{{product.nom_produit}}</h2>
+                                    <span class="product-details-ref">Reference: {{product.referance_produit}}</span>
+                                    <div class="rating-box pt-20">
+                                        <ul class="rating rating-with-review-item">
+                                            {% if product.moyenne == 0%}
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            {% elif product.moyenne == 1%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            {% elif product.moyenne == 2%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            {% elif product.moyenne == 3%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            
+                                            {% elif product.moyenne == 4%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            {% elif product.moyenne == 5%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                    <div class="price-box pt-20">
+                                        <span class="new-price new-price-2">{{product.prix}}da</span>
+                                    </div>
+                                    <div class="product-desc">
+                                        <p>
+                                            <span>{{product.desciption}}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    {% if product.category_name.category_name != 'formation' and product.category_name.category_name != 'service'%}
+                                    <div class="product-variants">
+                                        <div class="produt-variants-size">
+                                            <label>Dimension</label>
+                                            <select class="nice-select">
+                                                <option value="1" title="S" selected="selected">{{product.dimension_lonegeur}}x{{product.dimension_largeur}}cm</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {%endif%}
+                                    <div class="single-add-to-cart">
+                                        <form action="{%url 'add_to_cart' product.id %}" method="POST" class="cart-quantity">
+                                            {%csrf_token%}
+                                            <div class="quantity">
+                                                <label>Quantity</label>
+                                                <div class="cart-plus-minus">
+                                                    <input class="cart-plus-minus-box" value="1" name="quantity" type="text">
+                                                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                                </div>
+                                            </div>
+                                            <button class="add-to-cart" type="submit">Add to cart</button>
+                                        </form>
+                                    </div>
+                                    <div class="product-additional-info pt-25">
+                                        <a class="wishlist-btn" href="{%url 'add_to_wishlist' product.id %}"><i class="fa fa-heart-o"></i>Add to wishlist</a>
+                                        <div class="product-social-sharing pt-25">
+                                            <ul>
+                                                <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
+                                                <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
+                                                <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google +</a></li>
+                                                <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="block-reassurance">
+                                        <ul>
+                                            <li>
+                                                <div class="reassurance-item">
+                                                    <div class="reassurance-icon">
+                                                        <i class="fa fa-check-square-o"></i>
+                                                    </div>
+                                                    <p>Security policy (edit with Customer reassurance module)</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="reassurance-item">
+                                                    <div class="reassurance-icon">
+                                                        <i class="fa fa-truck"></i>
+                                                    </div>
+                                                    <p>Delivery policy (edit with Customer reassurance module)</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="reassurance-item">
+                                                    <div class="reassurance-icon">
+                                                        <i class="fa fa-exchange"></i>
+                                                    </div>
+                                                    <p> Return policy (edit with Customer reassurance module)</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <!-- content-wraper end -->
+            <!-- Begin Product Area -->
+            <div class="product-area pt-35">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="li-product-tab">
+                                <ul class="nav li-product-menu">
+                                   <li><a class="active" data-toggle="tab" href="#description"><span>Description</span></a></li>
+                                   <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li>
+                                </ul>               
+                            </div>
+                            <!-- Begin Li's Tab Menu Content Area -->
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div id="description" class="tab-pane active show" role="tabpanel">
+                            <div class="product-description">
+                                <span>{{product.description}}</span>
+                            </div>
+                        </div>
+                        <div id="reviews" class="tab-pane" role="tabpanel">
+                            <div class="product-reviews">
+                                <div class="product-details-comment-block">
+                                    {% for comment in comments %}
+                                    <div class="comment-review">
+                                        <span>Grade</span>
+                                        <ul class="rating">
+                                            {% if comment.stars == 0%}
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            {% elif comment.stars == 1%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            {% elif comment.stars == 2%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            {% elif comment.stars == 3%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            
+                                            {% elif comment.stars == 4%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            {% elif comment.stars == 5%}
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                    <div class="comment-author-infos pt-25">
+                                        <span>{{comment.username}}</span>
+                                        <em>{{comment.date}}</em>
+                                    </div>
+                                    <div class="comment-details">
+                                        <h4 class="title-block">Demo</h4>
+                                        <p>{{comment.comment_text}}</p>
+                                    </div>
+                                    <span>---------------</span>
+                                    {% endfor %}
+                                    <div class="review-btn">
+                                        <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Write Your Review!</a>
+                                    </div>
+                                    
+                                    <!-- Begin Quick View | Modal Area -->
+                                    <div class="modal fade modal-wrapper" id="mymodal" >
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <h3 class="review-page-title">Write Your Review</h3>
+                                                    <div class="modal-inner-area row">
+                                                        <div class="col-lg-6">
+                                                           <div class="li-review-product">
+                                                               <img src="{{product.photo_produit.url}}" alt="Li's Product">
+                                                               <div class="li-review-product-desc">
+                                                                   <p class="li-product-name">{{product.nom_produit}}</p>
+                                                                   <p>
+                                                                       <span>{{product.desciption}}</span>
+                                                                   </p>
+                                                               </div>
+                                                           </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="li-review-content">
+                                                                <!-- Begin Feedback Area -->
+                                                                <div class="feedback-area">
+                                                                    <div class="feedback">
+                                                                        <h3 class="feedback-title">Our Feedback</h3>
+                                                                        <form action="{%url 'add_comment' product.id %}">
+                                                                            <p class="your-opinion">
+                                                                                <label>Your Rating</label>
+                                                                                <span>
+                                                                                    <select class="star-rating" name="selected">
+                                                                                      <option value="1">1</option>
+                                                                                      <option value="2">2</option>
+                                                                                      <option value="3">3</option>
+                                                                                      <option value="4">4</option>
+                                                                                      <option value="5">5</option>
+                                                                                    </select>
+                                                                                </span>
+                                                                            </p>
+                                                                            <p class="feedback-form">
+                                                                                <label for="feedback">Your Review</label>
+                                                                                <textarea id="feedback" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+                                                                            </p>
+                                                                            <div class="feedback-input">
+                                                                                <p class="feedback-form-author">
+                                                                                    <label for="author">Name<span class="required">*</span>
+                                                                                    </label>
+                                                                                    <input id="author" name="nom" value="" size="30" aria-required="true" type="text">
+                                                                                </p>
+                                                                                <p class="feedback-form-author feedback-form-email">
+                                                                                    <label for="email">Email<span class="required">*</span>
+                                                                                    </label>
+                                                                                    <input id="email" name="email" value="" size="30" aria-required="true" type="text">
+                                                                                    <span class="required"><sub>*</sub> Required fields</span>
+                                                                                </p>
+                                                                                <div class="feedback-btn pb-15">
+                                                                                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">Close</a>
+                                                                                    <button type="submit">Add comment</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Feedback Area End Here -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                    <!-- Quick View | Modal Area End Here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Area End Here -->
+            <!-- Begin Li's Laptop Product Area -->
+            <section class="product-area li-laptop-product pt-30 pb-50">
+                <div class="container">
+                    <div class="row">
+                        <!-- Begin Li's Section Area -->
+                        <div class="col-lg-12">
+                            <div class="li-section-title">
+                                <h2>
+                                    <span>other products in the same category:</span>
+                                </h2>
+                            </div>
+                            <div class="row">
+                                <div class="product-active owl-carousel">
+                                    {% for other in other_product %}
+                                    <div class="col-lg-12">
+                                        <!-- single-product-wrap start -->
+                                        <div class="single-product-wrap">
+                                            <div class="product-image">
+                                                <a href="{% url 'product' other.id %}">
+                                                    <img src="{{other.photo_produit.url}}" alt="Li's Product Image">
+                                                </a>
+                                                <span class="sticker">New</span>
+                                            </div>
+                                            <div class="product_desc">
+                                                <div class="product_desc_info">
+                                                    <div class="product-review">
+                                                        <h5 class="manufacturer">
+                                                            <a href="product-details.html">{{other.category}}</a>
+                                                        </h5>
+                                                        <div class="rating-box">
+                                                            <ul class="rating">
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h4><a class="product_name" href="single-product.html">{{other.nom_produit}}</a></h4>
+                                                    <div class="price-box">
+                                                        <span class="new-price">{{other.prix}}da</span>
+                                                    </div>
+                                                </div>
+                                                <div class="add-actions">
+                                                    <ul class="add-actions-link">
+                                                        <li class="add-cart active"><a href="{%url 'add_to_cart' other.id %}">Add to cart</a></li>
+                                                        <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- single-product-wrap end -->
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Li's Section Area End Here -->
+                    </div>
+                </div>
+            </section>
+            <!-- Li's Laptop Product Area End Here -->
+{% endblock %}

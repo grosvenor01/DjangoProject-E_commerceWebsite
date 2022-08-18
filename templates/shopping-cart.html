@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!-- Begin Header Area -->
+<header>
+    <!-- Begin Header Middle Area -->
+    <div class="header-middle pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0">
+        <div class="container">
+            <div class="row">
+                <!-- Begin Header Logo Area -->
+                <div class="col-lg-3">
+                    <div class="logo pb-sm-30 pb-xs-30">
+                        <a href="{{'/home/'}}">
+                        </a>
+                    </div>
+                </div>
+                <!-- Header Logo Area End Here -->
+                <!-- Begin Header Middle Right Area -->
+                <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
+                    <!-- Begin Header Middle Searchbox Area -->
+                    <form action="{{'/search_product/'}}" method='POST' class="hm-searchbox">
+                        {% csrf_token %}
+                        <select class="nice-select select-search-category" name="selected">
+                            <option value="0">All</option>   
+                            {%for cat in categories %}                      
+                            <option value="{{cat.category_name}}">{{cat.category_name}}</option>                     
+                            {%endfor%}
+                        </select>
+                        <input type="text" name="searching" placeholder="Enter your search key ...">
+                        <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                    <!-- Header Middle Searchbox Area End Here -->
+                    <!-- Begin Header Middle Right Area -->
+                    <div class="header-middle-right">
+                        <ul class="hm-menu">
+                            <!-- Begin Header Middle Wishlist Area -->
+                            <li class="hm-wishlist">
+                                <a href="{{'/wishliste/'}}">
+                                    
+                                    <i class="fa fa-heart-o"></i>
+                                </a>
+                            </li>
+                            <!-- Header Middle Wishlist Area End Here -->
+                            <!-- Begin Header Mini Cart Area -->
+                            <li class="hm-minicart">
+                                <div class="hm-minicart-trigger">
+                                    <span class="item-icon"></span>
+                                    <span class="item-text">{{minicart}}da
+                                        <span class="cart-item-count">{{number_shopping}}</span>
+                                    </span>
+                                </div>
+                                <span></span>
+                                <div class="minicart">
+                                    <ul class="minicart-product-list">
+                                        {% for car in cart %}
+                                        <li>
+                                            <a href="{%url 'product' car.id %}" class="minicart-product-image">
+                                                <img src=" {{ car.produit.photo_produit.url }}" alt="cart products">
+                                            </a>
+                                            <div class="minicart-product-details">
+                                                <h6><a href="{% url 'product' car.id %}">{{car.produit.nom_produit}}</a></h6>
+                                                <span>{{car.produit.prix}}da x {{car.quantity}}</span>
+                                            </div>
+                                            <button class="close">
+                                                <a href="{%url 'remove_shoppingcart_item' car.id %}">
+                                                <i class="fa fa-close"></i>
+                                                </a>
+                                            </button>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p class="minicart-total">SUBTOTAL: <span>{{minicart}}da</span></p>
+                                    <div class="minicart-button">
+                                        <a href="{{'/shopping-cart/'}}" class="li-button li-button-dark li-button-fullwidth li-button-sm">
+                                            <span>View Full Cart</span>
+                                        </a>
+                         
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Header Mini Cart Area End Here -->
+                        </ul>
+                    </div>
+                    <!-- Header Middle Right Area End Here -->
+                </div>
+                <!-- Header Middle Right Area End Here -->
+            </div>
+        </div>
+    </div>
+    <!-- Header Middle Area End Here -->
+    <!-- Begin Header Bottom Area -->
+    <div class="header-bottom header-sticky d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Begin Header Bottom Menu Area -->
+                    <div class="hb-menu hb-menu-2 d-xl-block">
+                        <nav>
+                            <ul>
+                
+                                <li class="dropdown-holder"><a href="{{'/home/'}}">Home</a></li>
+                                <li class="megamenu-static-holder"><a href="{{'/home/'}}">Pages</a>
+                                <li class="dropdown-holder"><a href="{{'/formations/'}}">Formation</a></li>
+                                <li class="dropdown-holder"><a href="{{'/services/'}}">Services</a></li>
+                                    <ul class="megamenu hb-megamenu">
+                                        <li><a href="index.html">Principal pages</a>
+                                            <ul>
+                                                <li><a href="{{'/signin/'}}">My Account</a></li>
+                                                <li><a href="{{'/wishliste/'}}">Wishlist</a></li>
+                                                <li><a href="{{'/shopping-cart/'}}">Shopping Cart</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- Begin Header Bottom Menu Information Area -->
+                                <li class="hb-info f-right p-0 d-sm-none d-lg-block">
+                                    <div class="ht-setting-trigger"><span>Setting</span></div>
+                                   <div class="setting ht-setting">
+                                    <ul class="ht-setting-list">
+                                        <li><a href="">My Account</a></li>
+                                        <li><a href="{{'/shopping-cart/'}}">Checkout</a></li>
+                                        <li><a href="{{'/logout/'}}">Logout</a></li>
+                                    </ul>
+                                   </div>
+                                </li>
+                                <!-- Header Bottom Menu Information Area End Here -->
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- Header Bottom Menu Area End Here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header Bottom Area End Here -->
+    <!-- Begin Mobile Menu Area -->
+    <div class="mobile-menu-area d-lg-none d-xl-none col-12">
+        <div class="container"> 
+            <div class="row">
+                <div class="mobile-menu">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Mobile Menu Area End Here -->
+</header>
+<!-- Header Area End Here -->
+            <!-- Begin Li's Breadcrumb Area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="breadcrumb-content">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active">Shopping Cart</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Breadcrumb Area End Here -->
+            <!--Shopping Cart Area Strat-->
+            <div class="Shopping-cart-area pt-60 pb-60">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <form action="#">
+                                <div class="table-content table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="li-product-remove">remove</th>
+                                                <th class="li-product-thumbnail">images</th>
+                                                <th class="cart-product-name">Product</th>
+                                                <th class="li-product-price">Unit Price</th>
+                                                <th class="li-product-quantity">Quantity</th>
+                                                <th class="li-product-subtotal">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for cart in cart %}
+                                            <tr>
+                                                <td class="li-product-remove"><a href="{% url 'remove_shoppingcart_item' cart.id %}"><i class="fa fa-times"></i></a></td>
+                                                <td class="li-product-thumbnail"><a href="#"><img src="{{cart.produit.photo_produit.url}}" alt="Li's Product Image"></a></td>
+                                                <td class="li-product-name"><a href="#">{{cart.produit.nom_produit}}</a></td>
+                                                <td class="li-product-price"><span class="amount">{{cart.produit.prix}}</span></td>
+                                                <td class="quantity">
+                                                    <label>Quantity:</label><br>
+                                                    <span class="amount">{{cart.quantity}}</span></td></td>
+                                                <td class="product-subtotal"><span class="amount">{% widthratio cart.produit.prix 1 cart.quantity %}</span></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-5 ml-auto">
+                                        <div class="cart-page-total">
+                                            <h2>Cart totals</h2>
+                                            <ul>
+                                                <li>Subtotal <span>{{total}}da</span></li>
+                                                <li>Total <span>{{total}}da</span></li>
+                                            </ul>
+                                            <a href="{{'/confirme/'}}">Proceed to checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Shopping Cart Area End-->
+{% endblock %}
