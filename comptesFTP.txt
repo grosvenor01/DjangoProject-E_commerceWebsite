@@ -1,0 +1,30 @@
+les comptes ftp : 
+username : labtch1
+password : J95&7njv0
+
+username : labtch2
+password : O7l07i3@u
+
+username : labtch3
+password : Aiw6^8y26
+
+username : labtch4
+password : ^4Xd6j66h
+
+username : labtch5
+password : su5Fb8$40
+
+username : labtch6
+password : bz6tL40$3
+
+username : labtch7
+password : J77my!4l4
+
+username : labtch8
+password : aox21H!46
+
+username : labtch9
+password : z*fb30I59
+
+username : labtchse
+password : H4m32g3m#
